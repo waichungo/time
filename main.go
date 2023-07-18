@@ -1,14 +1,44 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os/exec"
 	"time"
 )
 
+type TimeInfo struct {
+	Abbreviation string    `json:"abbreviation"`
+	ClientIP     string    `json:"client_ip"`
+	Datetime     time.Time `json:"datetime"`
+	DayOfWeek    int       `json:"day_of_week"`
+	DayOfYear    int       `json:"day_of_year"`
+	Dst          bool      `json:"dst"`
+	DstFrom      any       `json:"dst_from"`
+	DstOffset    int       `json:"dst_offset"`
+	DstUntil     any       `json:"dst_until"`
+	RawOffset    int       `json:"raw_offset"`
+	Timezone     string    `json:"timezone"`
+	Unixtime     int       `json:"unixtime"`
+	UtcDatetime  time.Time `json:"utc_datetime"`
+	UtcOffset    string    `json:"utc_offset"`
+	WeekNumber   int       `json:"week_number"`
+}
+
+func CheckErr(err error) {
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 func main() {
+	data, err := GetData("http://worldtimeapi.org/api/ip.json")
+	CheckErr(err)
+	info := TimeInfo{}
+	err = json.Unmarshal(data, &info)
+	CheckErr(err)
 
 }
 func GetData(address string) ([]byte, error) {
