@@ -1,4 +1,4 @@
-package windowsiana
+package main
 
 import (
 	"errors"
