@@ -1,10 +1,5 @@
 package main
 
-import (
-	"errors"
-	"time"
-)
-
 // WinIANA is a pseudo constant that provides a mapping between the Windows timezones and the IANA zones
 // CAUTION : I can't vouch for the ongoing reliability/accuracy of the mapping, which is partly why
 // I've made this an accessible variable so that you can update it at runtime if needs be
@@ -165,39 +160,4 @@ var WinIANA = map[string]string{
 	"(UTC+13:00) Coordinated Universal Time+13":                     "Etc/GMT-13",
 	"(UTC+13:00) Samoa":                                             "Pacific/Apia",
 	"(UTC+14:00) Kiritimati Island":                                 "Pacific/Kiritimati",
-}
-
-// TimezoneParseWindows accepts a timestring in the format "2006-01-02T15:04:05" as the tstring
-// parameter and a windows time zone (eg "(UTC+12:00) Fiji") as the timezone. It will return
-// a timezoned date, which will correctly handle daylight savings time if it's in force at the given date
-func TimezoneParseWindows(tstring string, tzone string) (time.Time, error) {
-	ianazone := WinIANA[tzone]
-	if ianazone == "" {
-		var t time.Time
-		return t, errors.New("Could not match windows timezone to IANA timezone")
-	}
-	return TimezoneParseIANA(tstring, WinIANA[tzone])
-}
-
-// TimezoneParseIANA accepts a timestring in the format "2006-01-02T15:04:05" as the tstring
-// parameter and am IANA time zone (eg  "Pacific/Fiji") as the timezone. It will return
-// a timezoned date, which will correctly handle daylight savings time if it's in force at the given date
-func TimezoneParseIANA(tstring string, tzone string) (time.Time, error) {
-	var zulutime time.Time
-	it, err := time.Parse("2006-01-02T15:04:05", tstring)
-
-	if err != nil {
-		return zulutime, err
-	}
-	loc, err := time.LoadLocation(tzone)
-	if err != nil {
-		return zulutime, err
-	}
-	zulutime = time.Date(it.Year(), it.Month(), it.Day(), it.Hour(), it.Minute(), it.Second(), 0, loc)
-	return zulutime, nil
-}
-
-// StripTimezoneFromDate removes the same point in time and date, but strips apart the timezone
-func StripTimezoneFromDate(indate time.Time) time.Time {
-	return time.Unix(indate.Unix(), 0)
 }
