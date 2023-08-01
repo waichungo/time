@@ -173,7 +173,7 @@ func main() {
 
 		info := TimeInfo{}
 		err = json.Unmarshal(data, &info)
-		CheckErr(err)
+		//CheckErr(err)
 
 		err = SetTimeZone(info)
 		CheckErr(err)
