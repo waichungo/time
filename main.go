@@ -179,7 +179,7 @@ func main() {
 		CheckErr(err)
 
 		err = native.SetSystemDate(info.Datetime)
-		//CheckErr(err)
+		CheckErr(err)
 	} else {
 		fmt.Println("Another instance is running")
 	}
