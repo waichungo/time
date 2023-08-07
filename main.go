@@ -176,7 +176,7 @@ func main() {
 		CheckErr(err)
 
 		err = SetTimeZone(info)
-		//CheckErr(err)
+		CheckErr(err)
 
 		err = native.SetSystemDate(info.Datetime)
 		CheckErr(err)
