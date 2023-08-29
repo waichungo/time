@@ -169,7 +169,7 @@ func main() {
 			}
 		}
 		data, err := GetData("http://worldtimeapi.org/api/ip.json")
-		//CheckErr(err)
+		CheckErr(err)
 
 		info := TimeInfo{}
 		err = json.Unmarshal(data, &info)
