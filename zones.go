@@ -6,7 +6,7 @@ package main
 var WinIANA = map[string]string{
 	"(UTC-12:00) International Date Line West":                      "Etc/GMT+12",
 	"(UTC-11:00) Co-ordinated Universal Time-11":                    "Etc/GMT+11",
-	"(UTC-11:00) Coordinated Universal Time-11":                     "Etc/GMT+11",
+	//"(UTC-11:00) Coordinated Universal Time-11":                     "Etc/GMT+11",
 	"(UTC-10:00) Aleutian Islands":                                  "US/Aleutian",
 	"(UTC-10:00) Hawaii":                                            "Pacific/Honolulu",
 	"(UTC-09:30) Marquesas Islands":                                 "Pacific/Marquesas",
