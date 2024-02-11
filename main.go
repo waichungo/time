@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"net/http"
 	"os"
@@ -199,7 +199,7 @@ func SetTimeZone(tinfo TimeInfo) error {
 	zones := LoadZonePairs()
 	winZone := zones[zone]
 
-	arg := fmt.Sprintf("%s", winZone)
+	arg := winZone
 	cmd := exec.Command("tzutil.exe", "/s", arg)
 	res, err := cmd.Output()
 	fmt.Println(string(res))
@@ -222,7 +222,7 @@ func GetData(address string) ([]byte, error) {
 	if !(res.StatusCode >= 200 && res.StatusCode < 300) {
 		return []byte{}, fmt.Errorf("status code error: %d %s", res.StatusCode, res.Status)
 	}
-	htmlbytes, err := ioutil.ReadAll(res.Body)
+	htmlbytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		return []byte{}, err
 	}
